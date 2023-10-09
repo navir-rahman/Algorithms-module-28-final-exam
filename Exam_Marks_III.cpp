@@ -4,63 +4,33 @@ using namespace std;
 
 int main()
 {
-    int t;
-    cin>>t;
-    while (t--)
+        int n;
+    cin>>n;
+    int w[n];
+    for (int i = 0; i <n; i++)
     {
-        int n,M;
-        cin>>n>>M;
-        int a[n];
-        for (int i = 0; i <n; i++)
+        cin>>w[i];
+    }
+    int s;
+    cin>>s;
+    int dp[n+1][s+1];
+    dp[0][0]=0;
+    for (int i = 1; i <=s; i++)
+    {
+        dp[0][i]=INT_MAX-1;
+    }
+    for (int i = 1; i <=n; i++)
+    {
+        for (int j = 0; j <=s; j++)
         {
-            cin>>a[i];
-        }
-
-        int s=1000-M;
-        
-        int dp[n+1][s+1];
-        dp[0][0]=true;
-        for (size_t i = 1; i <=s; i++)
-        {
-            dp[0][i]=false;
-        }
-
-        for (size_t i = 1; i <=n; i++)
-        {
-            for (int j = 0; j <=s; j++)
-            {
-                if(a[i-1]<=j){
-
-                    int op1= dp[i][j-a[i-1]];
-                    int op2= dp[i-1][j];
-                    dp[i][j]= op1 + op2;
-                   
-                }else{
-                    
-                   
-                    dp[i][j]=dp[i-1][j];
-                }
+            if(w[i-1] <=j){
+                dp[i][j]=min(1+dp[i][j-w[i-1]], dp[i-1][j]);
+            }else{
+                dp[i][j]=dp[i-1][j];
             }
         }
-    cout<<dp[n][s]<<endl;
-        // for (size_t i = 0; i <=n; i++)
-        // {
-        //     for (size_t j = 0; j <=s; j++)
-        //     {
-        //         cout<<ds[i][j]<<" ";
-        //     }
-        //  cout<<endl;   
-        // }
-        // cout<<endl<<endl;
-        
-        // if(dp[n][s]){
-        //     cout<<"YES"<<endl;
-        // }else{
-        //     cout<<"NO"<<endl;
-        // }
-
         
     }
-    
+    cout<<dp[n][s];
     return 0;
 }
